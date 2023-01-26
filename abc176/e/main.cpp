@@ -34,28 +34,43 @@ void Main()
 	cin >> H >> W >> m;
 
 	vi h(H, 0), w(W, 0);
-	vector<pii> bomb(m);
+	set<pii> bomb;
 	while (m--)
 	{
 		int _h, _w;
 		cin >> _h >> _w;
-		bomb[m] = make_pair(_h - 1, _w - 1);
+		bomb.insert({_h - 1, _w - 1});
 
 		h[_h - 1]++;
 		w[_w - 1]++;
 	}
 
-	int max_h = max_element(all(h)) - h.begin();
-	int max_w = max_element(all(w)) - w.begin();
+	int max_h = *max_element(all(h));
+	int max_w = *max_element(all(w));
 
-	int flag = 0;
-	for (const auto &p : bomb)
+	// h[i] == max_hのiを保存hh
+	vi hh, ww;
+	rep(i, H)
 	{
-		if (p.first == max_h && p.second == max_w)
-			flag = 1;
+		if (h[i] == max_h)
+			hh.emplace_back(i);
+	}
+	rep(i, W)
+	{
+		if (w[i] == max_w)
+			ww.emplace_back(i);
 	}
 
-	cout << h[max_h] + w[max_w] - flag << endl;
+	rep(i, hh.size()) rep(j, ww.size())
+	{
+		if (!bomb.count({hh[i], ww[j]}))
+		{
+			cout << max_h + max_w << endl;
+			return;
+		}
+	}
+
+	cout << max_h + max_w - 1 << endl;
 }
 
 int main()
