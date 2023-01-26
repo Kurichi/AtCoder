@@ -3,17 +3,17 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < n; i++)
 #define REP(i, x, n) for (int i = x; i < n; i++)
 #define alin(v)       \
-    for (auto &a : v) \
-        cin >> a;
+	for (auto &a : v) \
+		cin >> a;
 #define all(v) (v).begin(), (v).end()
 #define mxin(a, b) (a = max(a, b))
 #define mnin(a, b) (a = min(a, b))
 #define F first;
 #define S second;
 #define grei     \
-    greater<int> \
-    {            \
-    }
+	greater<int> \
+	{            \
+	}
 using vi = vector<int>;
 using vvi = vector<vi>;
 using ll = long long;
@@ -30,37 +30,39 @@ using umap = unordered_map<T1, T2>;
 
 void Main()
 {
-    int n, m;
-    cin >> n >> m;
-    vi a(n + 1), c(n + m + 1);
-    alin(a);
-    alin(c);
-    reverse(all(a));
-    reverse(all(c));
+	int H, W, m;
+	cin >> H >> W >> m;
 
-    stack<int> answer;
-    rep(mi, m + 1)
-    {
-        int ans = c[mi] / a[0];
-        rep(i, n + 1)
-            c[mi + i] -= a[i] * ans;
-        answer.push(ans);
-    }
-    while (!answer.empty())
-    {
-        cout << answer.top();
-        answer.pop();
-        if (!answer.empty())
-            cout << " ";
-    }
-    cout << endl;
+	vi h(H, 0), w(W, 0);
+	vector<pii> bomb(m);
+	while (m--)
+	{
+		int _h, _w;
+		cin >> _h >> _w;
+		bomb[m] = make_pair(_h - 1, _w - 1);
+
+		h[_h - 1]++;
+		w[_w - 1]++;
+	}
+
+	int max_h = max_element(all(h)) - h.begin();
+	int max_w = max_element(all(w)) - w.begin();
+
+	int flag = 0;
+	for (const auto &p : bomb)
+	{
+		if (p.first == max_h && p.second == max_w)
+			flag = 1;
+	}
+
+	cout << h[max_h] + w[max_w] - flag << endl;
 }
 
 int main()
 {
-    cin.tie(nullptr);
-    ios_base::sync_with_stdio(false);
-    cout << fixed << setprecision(15);
-    Main();
-    return 0;
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
+	cout << fixed << setprecision(15);
+	Main();
+	return 0;
 }
