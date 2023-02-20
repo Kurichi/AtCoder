@@ -8,8 +8,6 @@ using namespace std;
 #define all(v) (v).begin(), (v).end()
 #define mxin(a, b) (a = max(a, b))
 #define mnin(a, b) (a = min(a, b))
-#define F first;
-#define S second;
 #define grei     \
 	greater<int> \
 	{            \
